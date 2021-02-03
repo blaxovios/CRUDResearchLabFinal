@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CRUDResearchLabFinal.Models.LabAnnouncement>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Announcement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cours.Undergraduate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LabMember.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberCategory.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PublicationMedia.PublicationType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publication.ThematicUnit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ResearchProject.Running)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Announcement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cours.Undergraduate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LabMember.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberCategory.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublicationMedia.PublicationType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Publication.ThematicUnit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResearchProject.Running)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LabAnnouncementsID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LabAnnouncementsID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LabAnnouncementsID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,74 @@
+﻿@model CRUDResearchLabFinal.Models.LabAnnouncement
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LabAnnouncement</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Announcement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Announcement)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cours.Undergraduate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cours.Undergraduate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LabMember.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LabMember.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemberCategory.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemberCategory.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PublicationMedia.PublicationType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PublicationMedia.PublicationType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Publication.ThematicUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Publication.ThematicUnit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResearchProject.Running)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResearchProject.Running)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LabAnnouncementsID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

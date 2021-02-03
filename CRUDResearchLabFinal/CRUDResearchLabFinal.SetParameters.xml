@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="researchlabtest" />
+  <setParameter name="ResearchLabEntities-Web.config Connection String" value="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DESKTOP-2OL82P5\SQLEXPRESS;initial catalog=ResearchLab;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+</parameters>

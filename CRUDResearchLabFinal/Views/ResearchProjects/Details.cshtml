@@ -1,0 +1,58 @@
+﻿@model CRUDResearchLabFinal.Models.ResearchProject
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ResearchProject</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Running)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Running)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Completed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Completed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descrptn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descrptn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LabMember.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LabMember.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Publication.ThematicUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Publication.ThematicUnit)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ResearchProjectsID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

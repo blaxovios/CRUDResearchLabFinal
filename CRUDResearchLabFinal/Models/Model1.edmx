@@ -1,0 +1,1496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ResearchLabModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Courses">
+          <Key>
+            <PropertyRef Name="CoursesID" />
+          </Key>
+          <Property Name="CoursesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Undergraduate" Type="nvarchar" MaxLength="50" />
+          <Property Name="Postgraduate" Type="nvarchar" MaxLength="50" />
+          <Property Name="LabMembersID" Type="int" />
+          <Property Name="LabAnnouncementsID" Type="int" />
+        </EntityType>
+        <EntityType Name="LabAnnouncements">
+          <Key>
+            <PropertyRef Name="LabAnnouncementsID" />
+          </Key>
+          <Property Name="LabAnnouncementsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LabMembersID" Type="int" />
+          <Property Name="MemberCategoriesID" Type="int" />
+          <Property Name="PublicationMediaID" Type="int" />
+          <Property Name="PublicationsID" Type="int" />
+          <Property Name="ResearchProjectsID" Type="int" />
+          <Property Name="CoursesID" Type="int" />
+          <Property Name="Announcement" Type="ntext" />
+        </EntityType>
+        <EntityType Name="LabMembers">
+          <Key>
+            <PropertyRef Name="LabMembersID" />
+          </Key>
+          <Property Name="LabMembersID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="WebPage" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShortCV" Type="nvarchar(max)" />
+          <Property Name="MemberCategoriesID" Type="int" />
+        </EntityType>
+        <EntityType Name="MemberCategories">
+          <Key>
+            <PropertyRef Name="MemberCategoriesID" />
+          </Key>
+          <Property Name="MemberCategoriesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descrptn" Type="ntext" />
+        </EntityType>
+        <EntityType Name="PublicationMedia">
+          <Key>
+            <PropertyRef Name="PublicationMediaID" />
+          </Key>
+          <Property Name="PublicationMediaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PublicationType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Publications">
+          <Key>
+            <PropertyRef Name="PublicationsID" />
+          </Key>
+          <Property Name="PublicationsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ThematicUnit" Type="nvarchar" MaxLength="50" />
+          <Property Name="LabMembersID" Type="int" />
+          <Property Name="PublicationYear" Type="int" />
+          <Property Name="PublicationMediaID" Type="int" />
+          <Property Name="ResearchProjectsID" Type="int" />
+          <Property Name="LabAnnouncementsID" Type="int" />
+        </EntityType>
+        <EntityType Name="ResearchProjects">
+          <Key>
+            <PropertyRef Name="ResearchProjectsID" />
+          </Key>
+          <Property Name="ResearchProjectsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Running" Type="nvarchar" MaxLength="50" />
+          <Property Name="Completed" Type="nvarchar" MaxLength="50" />
+          <Property Name="LabMembersID" Type="int" />
+          <Property Name="PublicationsID" Type="int" />
+          <Property Name="Descrptn" Type="ntext" />
+        </EntityType>
+        <Association Name="FK_Courses_LabAnnouncements">
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncements" Multiplicity="0..1" />
+          <End Role="Courses" Type="Self.Courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabAnnouncements">
+              <PropertyRef Name="LabAnnouncementsID" />
+            </Principal>
+            <Dependent Role="Courses">
+              <PropertyRef Name="LabAnnouncementsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Courses_LabMembers">
+          <End Role="LabMembers" Type="Self.LabMembers" Multiplicity="0..1" />
+          <End Role="Courses" Type="Self.Courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabMembers">
+              <PropertyRef Name="LabMembersID" />
+            </Principal>
+            <Dependent Role="Courses">
+              <PropertyRef Name="LabMembersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="CoursesID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="CoursesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_LabMembers">
+          <End Role="LabMembers" Type="Self.LabMembers" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabMembers">
+              <PropertyRef Name="LabMembersID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="LabMembersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_MemberCategories">
+          <End Role="MemberCategories" Type="Self.MemberCategories" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategories">
+              <PropertyRef Name="MemberCategoriesID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="MemberCategoriesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_PublicationMedia">
+          <End Role="PublicationMedia" Type="Self.PublicationMedia" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PublicationMedia">
+              <PropertyRef Name="PublicationMediaID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="PublicationMediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_Publications">
+          <End Role="Publications" Type="Self.Publications" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publications">
+              <PropertyRef Name="PublicationsID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="PublicationsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_ResearchProjects">
+          <End Role="ResearchProjects" Type="Self.ResearchProjects" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResearchProjects">
+              <PropertyRef Name="ResearchProjectsID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="ResearchProjectsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabMembers_MemberCategories">
+          <End Role="MemberCategories" Type="Self.MemberCategories" Multiplicity="0..1" />
+          <End Role="LabMembers" Type="Self.LabMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategories">
+              <PropertyRef Name="MemberCategoriesID" />
+            </Principal>
+            <Dependent Role="LabMembers">
+              <PropertyRef Name="MemberCategoriesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Publications_LabAnnouncements">
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncements" Multiplicity="0..1" />
+          <End Role="Publications" Type="Self.Publications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabAnnouncements">
+              <PropertyRef Name="LabAnnouncementsID" />
+            </Principal>
+            <Dependent Role="Publications">
+              <PropertyRef Name="LabAnnouncementsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Publications_LabMembers">
+          <End Role="LabMembers" Type="Self.LabMembers" Multiplicity="0..1" />
+          <End Role="Publications" Type="Self.Publications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabMembers">
+              <PropertyRef Name="LabMembersID" />
+            </Principal>
+            <Dependent Role="Publications">
+              <PropertyRef Name="LabMembersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Publications_PublicationMedia">
+          <End Role="PublicationMedia" Type="Self.PublicationMedia" Multiplicity="0..1" />
+          <End Role="Publications" Type="Self.Publications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PublicationMedia">
+              <PropertyRef Name="PublicationMediaID" />
+            </Principal>
+            <Dependent Role="Publications">
+              <PropertyRef Name="PublicationMediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Publications_ResearchProjects">
+          <End Role="ResearchProjects" Type="Self.ResearchProjects" Multiplicity="0..1" />
+          <End Role="Publications" Type="Self.Publications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResearchProjects">
+              <PropertyRef Name="ResearchProjectsID" />
+            </Principal>
+            <Dependent Role="Publications">
+              <PropertyRef Name="ResearchProjectsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResearchProjects_LabMembers">
+          <End Role="LabMembers" Type="Self.LabMembers" Multiplicity="0..1" />
+          <End Role="ResearchProjects" Type="Self.ResearchProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabMembers">
+              <PropertyRef Name="LabMembersID" />
+            </Principal>
+            <Dependent Role="ResearchProjects">
+              <PropertyRef Name="LabMembersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResearchProjects_Publications">
+          <End Role="Publications" Type="Self.Publications" Multiplicity="0..1" />
+          <End Role="ResearchProjects" Type="Self.ResearchProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publications">
+              <PropertyRef Name="PublicationsID" />
+            </Principal>
+            <Dependent Role="ResearchProjects">
+              <PropertyRef Name="PublicationsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spCoursesCreateOrUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CoursesID" Type="int" Mode="In" />
+          <Parameter Name="Undergraduate" Type="nvarchar" Mode="In" />
+          <Parameter Name="Postgraduate" Type="nvarchar" Mode="In" />
+          <Parameter Name="LabMembersID" Type="int" Mode="In" />
+          <Parameter Name="LabAnnouncementsID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spCoursesDeleteByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CoursesID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spCoursesViewAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spCoursesViewByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CoursesID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spLabAnnouncementsCreateOrUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabAnnouncementsID" Type="int" Mode="In" />
+          <Parameter Name="LabMembersID" Type="int" Mode="In" />
+          <Parameter Name="PublicationMediaID" Type="int" Mode="In" />
+          <Parameter Name="PublicationsID" Type="int" Mode="In" />
+          <Parameter Name="ResearchProjectsID" Type="int" Mode="In" />
+          <Parameter Name="CoursesID" Type="int" Mode="In" />
+          <Parameter Name="Announcement" Type="ntext" Mode="In" />
+        </Function>
+        <Function Name="spLabAnnouncementsDeleteByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabAnnouncementsID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spLabAnnouncementsViewAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spLabAnnouncementsViewByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabAnnouncementsID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spLabMembersCreateOrUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabMembersID" Type="int" Mode="In" />
+          <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Surname" Type="nvarchar" Mode="In" />
+          <Parameter Name="WebPage" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="ShortCV" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="MemberCategoriesID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spLabMembersDeleteByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabMembersID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spLabMembersViewAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spLabMembersViewByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabMembersID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spMemberActivityReportPerYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabMembersID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="spMemberCategoriesCreateOrUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MemberCategoriesID" Type="int" Mode="In" />
+          <Parameter Name="CategoryName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Descrptn" Type="ntext" Mode="In" />
+        </Function>
+        <Function Name="spMemberCategoriesDeleteByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MemberCategoriesID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spMemberCategoriesViewAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spMemberCategoriesViewByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MemberCategoriesID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spMemberPublicationPerCongress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabMembersID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="spMemberPublicationPerMagazine" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabMembersID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="spMemberPublicationPerPublicationType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabMembersID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="spMemberPublicationReportPerYearReversed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LabMembersID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="spMemberWithSameNumberOfPublications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PublicationType" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="spMemberWithSamePublications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PublicationsID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="spPublicationMediaCreateOrUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PublicationMediaID" Type="int" Mode="In" />
+          <Parameter Name="PublicationType" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="spPublicationMediaDeleteByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PublicationMediaID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spPublicationMediaViewAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spPublicationMediaViewByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PublicationMediaID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spPublicationsCreateOrUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PublicationsID" Type="int" Mode="In" />
+          <Parameter Name="ThematicUnit" Type="nvarchar" Mode="In" />
+          <Parameter Name="LabMembersID" Type="int" Mode="In" />
+          <Parameter Name="PublicationYear" Type="int" Mode="In" />
+          <Parameter Name="PublicationMediaID" Type="int" Mode="In" />
+          <Parameter Name="ResearchProjectsID" Type="int" Mode="In" />
+          <Parameter Name="LabAnnouncementsID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spPublicationsDeleteByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PublicationsID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spPublicationsViewAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spPublicationsViewByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PublicationsID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spResearchProjectsCreateOrUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ResearchProjectsID" Type="int" Mode="In" />
+          <Parameter Name="Running" Type="nvarchar" Mode="In" />
+          <Parameter Name="Completed" Type="nvarchar" Mode="In" />
+          <Parameter Name="LabMembersID" Type="int" Mode="In" />
+          <Parameter Name="PublicationsID" Type="int" Mode="In" />
+          <Parameter Name="Descrptn" Type="ntext" Mode="In" />
+        </Function>
+        <Function Name="spResearchprojectsDeleteByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ResearchprojectsID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spResearchprojectsViewAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spResearchProjectsViewByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ResearchProjectsID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ResearchLabModelStoreContainer">
+          <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LabAnnouncements" EntityType="Self.LabAnnouncements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LabMembers" EntityType="Self.LabMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberCategories" EntityType="Self.MemberCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PublicationMedia" EntityType="Self.PublicationMedia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publications" EntityType="Self.Publications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResearchProjects" EntityType="Self.ResearchProjects" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Courses_LabAnnouncements" Association="Self.FK_Courses_LabAnnouncements">
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+            <End Role="Courses" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Courses_LabMembers" Association="Self.FK_Courses_LabMembers">
+            <End Role="LabMembers" EntitySet="LabMembers" />
+            <End Role="Courses" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_Courses" Association="Self.FK_LabAnnouncements_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_LabMembers" Association="Self.FK_LabAnnouncements_LabMembers">
+            <End Role="LabMembers" EntitySet="LabMembers" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_MemberCategories" Association="Self.FK_LabAnnouncements_MemberCategories">
+            <End Role="MemberCategories" EntitySet="MemberCategories" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_PublicationMedia" Association="Self.FK_LabAnnouncements_PublicationMedia">
+            <End Role="PublicationMedia" EntitySet="PublicationMedia" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_Publications" Association="Self.FK_LabAnnouncements_Publications">
+            <End Role="Publications" EntitySet="Publications" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_ResearchProjects" Association="Self.FK_LabAnnouncements_ResearchProjects">
+            <End Role="ResearchProjects" EntitySet="ResearchProjects" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabMembers_MemberCategories" Association="Self.FK_LabMembers_MemberCategories">
+            <End Role="MemberCategories" EntitySet="MemberCategories" />
+            <End Role="LabMembers" EntitySet="LabMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Publications_LabAnnouncements" Association="Self.FK_Publications_LabAnnouncements">
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+            <End Role="Publications" EntitySet="Publications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Publications_LabMembers" Association="Self.FK_Publications_LabMembers">
+            <End Role="LabMembers" EntitySet="LabMembers" />
+            <End Role="Publications" EntitySet="Publications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Publications_PublicationMedia" Association="Self.FK_Publications_PublicationMedia">
+            <End Role="PublicationMedia" EntitySet="PublicationMedia" />
+            <End Role="Publications" EntitySet="Publications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Publications_ResearchProjects" Association="Self.FK_Publications_ResearchProjects">
+            <End Role="ResearchProjects" EntitySet="ResearchProjects" />
+            <End Role="Publications" EntitySet="Publications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResearchProjects_LabMembers" Association="Self.FK_ResearchProjects_LabMembers">
+            <End Role="LabMembers" EntitySet="LabMembers" />
+            <End Role="ResearchProjects" EntitySet="ResearchProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResearchProjects_Publications" Association="Self.FK_ResearchProjects_Publications">
+            <End Role="Publications" EntitySet="Publications" />
+            <End Role="ResearchProjects" EntitySet="ResearchProjects" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ResearchLabModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cours">
+          <Key>
+            <PropertyRef Name="CoursesID" />
+          </Key>
+          <Property Name="CoursesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Undergraduate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Postgraduate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LabMembersID" Type="Int32" />
+          <Property Name="LabAnnouncementsID" Type="Int32" />
+          <NavigationProperty Name="LabAnnouncement" Relationship="Self.FK_Courses_LabAnnouncements" FromRole="Courses" ToRole="LabAnnouncements" />
+          <NavigationProperty Name="LabMember" Relationship="Self.FK_Courses_LabMembers" FromRole="Courses" ToRole="LabMembers" />
+          <NavigationProperty Name="LabAnnouncements" Relationship="Self.FK_LabAnnouncements_Courses" FromRole="Courses" ToRole="LabAnnouncements" />
+        </EntityType>
+        <EntityType Name="LabAnnouncement">
+          <Key>
+            <PropertyRef Name="LabAnnouncementsID" />
+          </Key>
+          <Property Name="LabAnnouncementsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LabMembersID" Type="Int32" />
+          <Property Name="MemberCategoriesID" Type="Int32" />
+          <Property Name="PublicationMediaID" Type="Int32" />
+          <Property Name="PublicationsID" Type="Int32" />
+          <Property Name="ResearchProjectsID" Type="Int32" />
+          <Property Name="CoursesID" Type="Int32" />
+          <Property Name="Announcement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK_Courses_LabAnnouncements" FromRole="LabAnnouncements" ToRole="Courses" />
+          <NavigationProperty Name="Cours" Relationship="Self.FK_LabAnnouncements_Courses" FromRole="LabAnnouncements" ToRole="Courses" />
+          <NavigationProperty Name="LabMember" Relationship="Self.FK_LabAnnouncements_LabMembers" FromRole="LabAnnouncements" ToRole="LabMembers" />
+          <NavigationProperty Name="MemberCategory" Relationship="Self.FK_LabAnnouncements_MemberCategories" FromRole="LabAnnouncements" ToRole="MemberCategories" />
+          <NavigationProperty Name="PublicationMedia" Relationship="Self.FK_LabAnnouncements_PublicationMedia" FromRole="LabAnnouncements" ToRole="PublicationMedia" />
+          <NavigationProperty Name="Publication" Relationship="Self.FK_LabAnnouncements_Publications" FromRole="LabAnnouncements" ToRole="Publications" />
+          <NavigationProperty Name="ResearchProject" Relationship="Self.FK_LabAnnouncements_ResearchProjects" FromRole="LabAnnouncements" ToRole="ResearchProjects" />
+          <NavigationProperty Name="Publications" Relationship="Self.FK_Publications_LabAnnouncements" FromRole="LabAnnouncements" ToRole="Publications" />
+        </EntityType>
+        <EntityType Name="LabMember">
+          <Key>
+            <PropertyRef Name="LabMembersID" />
+          </Key>
+          <Property Name="LabMembersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WebPage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShortCV" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MemberCategoriesID" Type="Int32" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK_Courses_LabMembers" FromRole="LabMembers" ToRole="Courses" />
+          <NavigationProperty Name="LabAnnouncements" Relationship="Self.FK_LabAnnouncements_LabMembers" FromRole="LabMembers" ToRole="LabAnnouncements" />
+          <NavigationProperty Name="MemberCategory" Relationship="Self.FK_LabMembers_MemberCategories" FromRole="LabMembers" ToRole="MemberCategories" />
+          <NavigationProperty Name="Publications" Relationship="Self.FK_Publications_LabMembers" FromRole="LabMembers" ToRole="Publications" />
+          <NavigationProperty Name="ResearchProjects" Relationship="Self.FK_ResearchProjects_LabMembers" FromRole="LabMembers" ToRole="ResearchProjects" />
+        </EntityType>
+        <EntityType Name="MemberCategory">
+          <Key>
+            <PropertyRef Name="MemberCategoriesID" />
+          </Key>
+          <Property Name="MemberCategoriesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descrptn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LabAnnouncements" Relationship="Self.FK_LabAnnouncements_MemberCategories" FromRole="MemberCategories" ToRole="LabAnnouncements" />
+          <NavigationProperty Name="LabMembers" Relationship="Self.FK_LabMembers_MemberCategories" FromRole="MemberCategories" ToRole="LabMembers" />
+        </EntityType>
+        <EntityType Name="PublicationMedia">
+          <Key>
+            <PropertyRef Name="PublicationMediaID" />
+          </Key>
+          <Property Name="PublicationMediaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PublicationType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LabAnnouncements" Relationship="Self.FK_LabAnnouncements_PublicationMedia" FromRole="PublicationMedia" ToRole="LabAnnouncements" />
+          <NavigationProperty Name="Publications" Relationship="Self.FK_Publications_PublicationMedia" FromRole="PublicationMedia" ToRole="Publications" />
+        </EntityType>
+        <EntityType Name="Publication">
+          <Key>
+            <PropertyRef Name="PublicationsID" />
+          </Key>
+          <Property Name="PublicationsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ThematicUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LabMembersID" Type="Int32" />
+          <Property Name="PublicationYear" Type="Int32" />
+          <Property Name="PublicationMediaID" Type="Int32" />
+          <Property Name="ResearchProjectsID" Type="Int32" />
+          <Property Name="LabAnnouncementsID" Type="Int32" />
+          <NavigationProperty Name="LabAnnouncements" Relationship="Self.FK_LabAnnouncements_Publications" FromRole="Publications" ToRole="LabAnnouncements" />
+          <NavigationProperty Name="LabAnnouncement" Relationship="Self.FK_Publications_LabAnnouncements" FromRole="Publications" ToRole="LabAnnouncements" />
+          <NavigationProperty Name="LabMember" Relationship="Self.FK_Publications_LabMembers" FromRole="Publications" ToRole="LabMembers" />
+          <NavigationProperty Name="PublicationMedia" Relationship="Self.FK_Publications_PublicationMedia" FromRole="Publications" ToRole="PublicationMedia" />
+          <NavigationProperty Name="ResearchProject" Relationship="Self.FK_Publications_ResearchProjects" FromRole="Publications" ToRole="ResearchProjects" />
+          <NavigationProperty Name="ResearchProjects" Relationship="Self.FK_ResearchProjects_Publications" FromRole="Publications" ToRole="ResearchProjects" />
+        </EntityType>
+        <EntityType Name="ResearchProject">
+          <Key>
+            <PropertyRef Name="ResearchProjectsID" />
+          </Key>
+          <Property Name="ResearchProjectsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Running" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Completed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LabMembersID" Type="Int32" />
+          <Property Name="PublicationsID" Type="Int32" />
+          <Property Name="Descrptn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LabAnnouncements" Relationship="Self.FK_LabAnnouncements_ResearchProjects" FromRole="ResearchProjects" ToRole="LabAnnouncements" />
+          <NavigationProperty Name="LabMember" Relationship="Self.FK_ResearchProjects_LabMembers" FromRole="ResearchProjects" ToRole="LabMembers" />
+          <NavigationProperty Name="Publications" Relationship="Self.FK_Publications_ResearchProjects" FromRole="ResearchProjects" ToRole="Publications" />
+          <NavigationProperty Name="Publication" Relationship="Self.FK_ResearchProjects_Publications" FromRole="ResearchProjects" ToRole="Publications" />
+        </EntityType>
+        <Association Name="FK_Courses_LabAnnouncements">
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncement" Multiplicity="0..1" />
+          <End Role="Courses" Type="Self.Cours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabAnnouncements">
+              <PropertyRef Name="LabAnnouncementsID" />
+            </Principal>
+            <Dependent Role="Courses">
+              <PropertyRef Name="LabAnnouncementsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Courses_LabMembers">
+          <End Role="LabMembers" Type="Self.LabMember" Multiplicity="0..1" />
+          <End Role="Courses" Type="Self.Cours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabMembers">
+              <PropertyRef Name="LabMembersID" />
+            </Principal>
+            <Dependent Role="Courses">
+              <PropertyRef Name="LabMembersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_Courses">
+          <End Role="Courses" Type="Self.Cours" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="CoursesID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="CoursesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_LabMembers">
+          <End Role="LabMembers" Type="Self.LabMember" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabMembers">
+              <PropertyRef Name="LabMembersID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="LabMembersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_MemberCategories">
+          <End Role="MemberCategories" Type="Self.MemberCategory" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategories">
+              <PropertyRef Name="MemberCategoriesID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="MemberCategoriesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_PublicationMedia">
+          <End Role="PublicationMedia" Type="Self.PublicationMedia" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PublicationMedia">
+              <PropertyRef Name="PublicationMediaID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="PublicationMediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_Publications">
+          <End Role="Publications" Type="Self.Publication" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publications">
+              <PropertyRef Name="PublicationsID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="PublicationsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabAnnouncements_ResearchProjects">
+          <End Role="ResearchProjects" Type="Self.ResearchProject" Multiplicity="0..1" />
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResearchProjects">
+              <PropertyRef Name="ResearchProjectsID" />
+            </Principal>
+            <Dependent Role="LabAnnouncements">
+              <PropertyRef Name="ResearchProjectsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Publications_LabAnnouncements">
+          <End Role="LabAnnouncements" Type="Self.LabAnnouncement" Multiplicity="0..1" />
+          <End Role="Publications" Type="Self.Publication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabAnnouncements">
+              <PropertyRef Name="LabAnnouncementsID" />
+            </Principal>
+            <Dependent Role="Publications">
+              <PropertyRef Name="LabAnnouncementsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabMembers_MemberCategories">
+          <End Role="MemberCategories" Type="Self.MemberCategory" Multiplicity="0..1" />
+          <End Role="LabMembers" Type="Self.LabMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategories">
+              <PropertyRef Name="MemberCategoriesID" />
+            </Principal>
+            <Dependent Role="LabMembers">
+              <PropertyRef Name="MemberCategoriesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Publications_LabMembers">
+          <End Role="LabMembers" Type="Self.LabMember" Multiplicity="0..1" />
+          <End Role="Publications" Type="Self.Publication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabMembers">
+              <PropertyRef Name="LabMembersID" />
+            </Principal>
+            <Dependent Role="Publications">
+              <PropertyRef Name="LabMembersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResearchProjects_LabMembers">
+          <End Role="LabMembers" Type="Self.LabMember" Multiplicity="0..1" />
+          <End Role="ResearchProjects" Type="Self.ResearchProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabMembers">
+              <PropertyRef Name="LabMembersID" />
+            </Principal>
+            <Dependent Role="ResearchProjects">
+              <PropertyRef Name="LabMembersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Publications_PublicationMedia">
+          <End Role="PublicationMedia" Type="Self.PublicationMedia" Multiplicity="0..1" />
+          <End Role="Publications" Type="Self.Publication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PublicationMedia">
+              <PropertyRef Name="PublicationMediaID" />
+            </Principal>
+            <Dependent Role="Publications">
+              <PropertyRef Name="PublicationMediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Publications_ResearchProjects">
+          <End Role="ResearchProjects" Type="Self.ResearchProject" Multiplicity="0..1" />
+          <End Role="Publications" Type="Self.Publication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResearchProjects">
+              <PropertyRef Name="ResearchProjectsID" />
+            </Principal>
+            <Dependent Role="Publications">
+              <PropertyRef Name="ResearchProjectsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResearchProjects_Publications">
+          <End Role="Publications" Type="Self.Publication" Multiplicity="0..1" />
+          <End Role="ResearchProjects" Type="Self.ResearchProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publications">
+              <PropertyRef Name="PublicationsID" />
+            </Principal>
+            <Dependent Role="ResearchProjects">
+              <PropertyRef Name="PublicationsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ResearchLabEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Courses" EntityType="Self.Cours" />
+          <EntitySet Name="LabAnnouncements" EntityType="Self.LabAnnouncement" />
+          <EntitySet Name="LabMembers" EntityType="Self.LabMember" />
+          <EntitySet Name="MemberCategories" EntityType="Self.MemberCategory" />
+          <EntitySet Name="PublicationMedias" EntityType="Self.PublicationMedia" />
+          <EntitySet Name="Publications" EntityType="Self.Publication" />
+          <EntitySet Name="ResearchProjects" EntityType="Self.ResearchProject" />
+          <AssociationSet Name="FK_Courses_LabAnnouncements" Association="Self.FK_Courses_LabAnnouncements">
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+            <End Role="Courses" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Courses_LabMembers" Association="Self.FK_Courses_LabMembers">
+            <End Role="LabMembers" EntitySet="LabMembers" />
+            <End Role="Courses" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_Courses" Association="Self.FK_LabAnnouncements_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_LabMembers" Association="Self.FK_LabAnnouncements_LabMembers">
+            <End Role="LabMembers" EntitySet="LabMembers" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_MemberCategories" Association="Self.FK_LabAnnouncements_MemberCategories">
+            <End Role="MemberCategories" EntitySet="MemberCategories" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_PublicationMedia" Association="Self.FK_LabAnnouncements_PublicationMedia">
+            <End Role="PublicationMedia" EntitySet="PublicationMedias" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_Publications" Association="Self.FK_LabAnnouncements_Publications">
+            <End Role="Publications" EntitySet="Publications" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabAnnouncements_ResearchProjects" Association="Self.FK_LabAnnouncements_ResearchProjects">
+            <End Role="ResearchProjects" EntitySet="ResearchProjects" />
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Publications_LabAnnouncements" Association="Self.FK_Publications_LabAnnouncements">
+            <End Role="LabAnnouncements" EntitySet="LabAnnouncements" />
+            <End Role="Publications" EntitySet="Publications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabMembers_MemberCategories" Association="Self.FK_LabMembers_MemberCategories">
+            <End Role="MemberCategories" EntitySet="MemberCategories" />
+            <End Role="LabMembers" EntitySet="LabMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Publications_LabMembers" Association="Self.FK_Publications_LabMembers">
+            <End Role="LabMembers" EntitySet="LabMembers" />
+            <End Role="Publications" EntitySet="Publications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResearchProjects_LabMembers" Association="Self.FK_ResearchProjects_LabMembers">
+            <End Role="LabMembers" EntitySet="LabMembers" />
+            <End Role="ResearchProjects" EntitySet="ResearchProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Publications_PublicationMedia" Association="Self.FK_Publications_PublicationMedia">
+            <End Role="PublicationMedia" EntitySet="PublicationMedias" />
+            <End Role="Publications" EntitySet="Publications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Publications_ResearchProjects" Association="Self.FK_Publications_ResearchProjects">
+            <End Role="ResearchProjects" EntitySet="ResearchProjects" />
+            <End Role="Publications" EntitySet="Publications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResearchProjects_Publications" Association="Self.FK_ResearchProjects_Publications">
+            <End Role="Publications" EntitySet="Publications" />
+            <End Role="ResearchProjects" EntitySet="ResearchProjects" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ResearchLabModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ResearchLabModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="spCoursesCreateOrUpdate">
+            <Parameter Name="CoursesID" Mode="In" Type="Int32" />
+            <Parameter Name="Undergraduate" Mode="In" Type="String" />
+            <Parameter Name="Postgraduate" Mode="In" Type="String" />
+            <Parameter Name="LabMembersID" Mode="In" Type="Int32" />
+            <Parameter Name="LabAnnouncementsID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spCoursesDeleteByID">
+            <Parameter Name="CoursesID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spCoursesViewAll" ReturnType="Collection(ResearchLabModel.spCoursesViewAll_Result)" />
+          <FunctionImport Name="spCoursesViewByID" ReturnType="Collection(ResearchLabModel.spCoursesViewByID_Result)">
+            <Parameter Name="CoursesID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spLabAnnouncementsCreateOrUpdate">
+            <Parameter Name="LabAnnouncementsID" Mode="In" Type="Int32" />
+            <Parameter Name="LabMembersID" Mode="In" Type="Int32" />
+            <Parameter Name="PublicationMediaID" Mode="In" Type="Int32" />
+            <Parameter Name="PublicationsID" Mode="In" Type="Int32" />
+            <Parameter Name="ResearchProjectsID" Mode="In" Type="Int32" />
+            <Parameter Name="CoursesID" Mode="In" Type="Int32" />
+            <Parameter Name="Announcement" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spLabAnnouncementsDeleteByID">
+            <Parameter Name="LabAnnouncementsID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spLabAnnouncementsViewAll" ReturnType="Collection(ResearchLabModel.spLabAnnouncementsViewAll_Result)" />
+          <FunctionImport Name="spLabAnnouncementsViewByID" ReturnType="Collection(ResearchLabModel.spLabAnnouncementsViewByID_Result)">
+            <Parameter Name="LabAnnouncementsID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spLabMembersCreateOrUpdate">
+            <Parameter Name="LabMembersID" Mode="In" Type="Int32" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+            <Parameter Name="WebPage" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="ShortCV" Mode="In" Type="String" />
+            <Parameter Name="MemberCategoriesID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spLabMembersDeleteByID">
+            <Parameter Name="LabMembersID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spLabMembersViewAll" ReturnType="Collection(ResearchLabModel.spLabMembersViewAll_Result)" />
+          <FunctionImport Name="spLabMembersViewByID" ReturnType="Collection(ResearchLabModel.spLabMembersViewByID_Result)">
+            <Parameter Name="LabMembersID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spMemberActivityReportPerYear" ReturnType="Collection(ResearchLabModel.spMemberActivityReportPerYear_Result)">
+            <Parameter Name="LabMembersID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spMemberCategoriesCreateOrUpdate">
+            <Parameter Name="MemberCategoriesID" Mode="In" Type="Int32" />
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="Descrptn" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spMemberCategoriesDeleteByID">
+            <Parameter Name="MemberCategoriesID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spMemberCategoriesViewAll" ReturnType="Collection(ResearchLabModel.spMemberCategoriesViewAll_Result)" />
+          <FunctionImport Name="spMemberCategoriesViewByID" ReturnType="Collection(ResearchLabModel.spMemberCategoriesViewByID_Result)">
+            <Parameter Name="MemberCategoriesID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spMemberPublicationPerCongress" ReturnType="Collection(Int32)">
+            <Parameter Name="LabMembersID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spMemberPublicationPerMagazine" ReturnType="Collection(Int32)">
+            <Parameter Name="LabMembersID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spMemberPublicationPerPublicationType" ReturnType="Collection(ResearchLabModel.spMemberPublicationPerPublicationType_Result)">
+            <Parameter Name="LabMembersID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spMemberPublicationReportPerYearReversed" ReturnType="Collection(ResearchLabModel.spMemberPublicationReportPerYearReversed_Result)">
+            <Parameter Name="LabMembersID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spMemberWithSameNumberOfPublications" ReturnType="Collection(ResearchLabModel.spMemberWithSameNumberOfPublications_Result)">
+            <Parameter Name="PublicationType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spMemberWithSamePublications" ReturnType="Collection(ResearchLabModel.spMemberWithSamePublications_Result)">
+            <Parameter Name="PublicationsID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spPublicationMediaCreateOrUpdate">
+            <Parameter Name="PublicationMediaID" Mode="In" Type="Int32" />
+            <Parameter Name="PublicationType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spPublicationMediaDeleteByID">
+            <Parameter Name="PublicationMediaID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spPublicationMediaViewAll" ReturnType="Collection(ResearchLabModel.spPublicationMediaViewAll_Result)" />
+          <FunctionImport Name="spPublicationMediaViewByID" ReturnType="Collection(ResearchLabModel.spPublicationMediaViewByID_Result)">
+            <Parameter Name="PublicationMediaID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spPublicationsCreateOrUpdate">
+            <Parameter Name="PublicationsID" Mode="In" Type="Int32" />
+            <Parameter Name="ThematicUnit" Mode="In" Type="String" />
+            <Parameter Name="LabMembersID" Mode="In" Type="Int32" />
+            <Parameter Name="PublicationYear" Mode="In" Type="Int32" />
+            <Parameter Name="PublicationMediaID" Mode="In" Type="Int32" />
+            <Parameter Name="ResearchProjectsID" Mode="In" Type="Int32" />
+            <Parameter Name="LabAnnouncementsID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spPublicationsDeleteByID">
+            <Parameter Name="PublicationsID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spPublicationsViewAll" ReturnType="Collection(ResearchLabModel.spPublicationsViewAll_Result)" />
+          <FunctionImport Name="spPublicationsViewByID" ReturnType="Collection(ResearchLabModel.spPublicationsViewByID_Result)">
+            <Parameter Name="PublicationsID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spResearchProjectsCreateOrUpdate">
+            <Parameter Name="ResearchProjectsID" Mode="In" Type="Int32" />
+            <Parameter Name="Running" Mode="In" Type="String" />
+            <Parameter Name="Completed" Mode="In" Type="String" />
+            <Parameter Name="LabMembersID" Mode="In" Type="Int32" />
+            <Parameter Name="PublicationsID" Mode="In" Type="Int32" />
+            <Parameter Name="Descrptn" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spResearchprojectsDeleteByID">
+            <Parameter Name="ResearchprojectsID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spResearchprojectsViewAll" ReturnType="Collection(ResearchLabModel.spResearchprojectsViewAll_Result)" />
+          <FunctionImport Name="spResearchProjectsViewByID" ReturnType="Collection(ResearchLabModel.spResearchProjectsViewByID_Result)">
+            <Parameter Name="ResearchProjectsID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spCoursesViewAll_Result">
+          <Property Type="Int32" Name="CoursesID" Nullable="false" />
+          <Property Type="String" Name="Undergraduate" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Postgraduate" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+          <Property Type="Int32" Name="LabAnnouncementsID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spCoursesViewByID_Result">
+          <Property Type="Int32" Name="CoursesID" Nullable="false" />
+          <Property Type="String" Name="Undergraduate" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Postgraduate" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+          <Property Type="Int32" Name="LabAnnouncementsID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spLabAnnouncementsViewAll_Result">
+          <Property Type="Int32" Name="LabAnnouncementsID" Nullable="false" />
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+          <Property Type="Int32" Name="MemberCategoriesID" Nullable="true" />
+          <Property Type="Int32" Name="PublicationMediaID" Nullable="true" />
+          <Property Type="Int32" Name="PublicationsID" Nullable="true" />
+          <Property Type="Int32" Name="ResearchProjectsID" Nullable="true" />
+          <Property Type="Int32" Name="CoursesID" Nullable="true" />
+          <Property Type="String" Name="Announcement" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="spLabAnnouncementsViewByID_Result">
+          <Property Type="Int32" Name="LabAnnouncementsID" Nullable="false" />
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+          <Property Type="Int32" Name="MemberCategoriesID" Nullable="true" />
+          <Property Type="Int32" Name="PublicationMediaID" Nullable="true" />
+          <Property Type="Int32" Name="PublicationsID" Nullable="true" />
+          <Property Type="Int32" Name="ResearchProjectsID" Nullable="true" />
+          <Property Type="Int32" Name="CoursesID" Nullable="true" />
+          <Property Type="String" Name="Announcement" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="spLabMembersViewAll_Result">
+          <Property Type="Int32" Name="LabMembersID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Surname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WebPage" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ShortCV" Nullable="true" />
+          <Property Type="Int32" Name="MemberCategoriesID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spLabMembersViewByID_Result">
+          <Property Type="Int32" Name="LabMembersID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Surname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="WebPage" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ShortCV" Nullable="true" />
+          <Property Type="Int32" Name="MemberCategoriesID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spMemberActivityReportPerYear_Result">
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Surname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ThematicUnit" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PublicationYear" Nullable="true" />
+          <Property Type="String" Name="Running" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Completed" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Descrptn" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="Undergraduate" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Postgraduate" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spMemberCategoriesViewAll_Result">
+          <Property Type="Int32" Name="MemberCategoriesID" Nullable="false" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Descrptn" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="spMemberCategoriesViewByID_Result">
+          <Property Type="Int32" Name="MemberCategoriesID" Nullable="false" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Descrptn" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="spMemberPublicationPerPublicationType_Result">
+          <Property Type="Int32" Name="NumberOfPublicationsPerType" Nullable="true" />
+          <Property Type="String" Name="PublicationType" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spMemberPublicationReportPerYearReversed_Result">
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Surname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ThematicUnit" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PublicationYear" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spMemberWithSameNumberOfPublications_Result">
+          <Property Type="Int32" Name="NumberOfSamePublications" Nullable="true" />
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spMemberWithSamePublications_Result">
+          <Property Type="Int32" Name="SamePublications" Nullable="true" />
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spPublicationMediaViewAll_Result">
+          <Property Type="Int32" Name="PublicationMediaID" Nullable="false" />
+          <Property Type="String" Name="PublicationType" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spPublicationMediaViewByID_Result">
+          <Property Type="Int32" Name="PublicationMediaID" Nullable="false" />
+          <Property Type="String" Name="PublicationType" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spPublicationsViewAll_Result">
+          <Property Type="Int32" Name="PublicationsID" Nullable="false" />
+          <Property Type="String" Name="ThematicUnit" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+          <Property Type="Int32" Name="PublicationYear" Nullable="true" />
+          <Property Type="Int32" Name="PublicationMediaID" Nullable="true" />
+          <Property Type="Int32" Name="ResearchProjectsID" Nullable="true" />
+          <Property Type="Int32" Name="LabAnnouncementsID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spPublicationsViewByID_Result">
+          <Property Type="Int32" Name="PublicationsID" Nullable="false" />
+          <Property Type="String" Name="ThematicUnit" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+          <Property Type="Int32" Name="PublicationYear" Nullable="true" />
+          <Property Type="Int32" Name="PublicationMediaID" Nullable="true" />
+          <Property Type="Int32" Name="ResearchProjectsID" Nullable="true" />
+          <Property Type="Int32" Name="LabAnnouncementsID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spResearchprojectsViewAll_Result">
+          <Property Type="Int32" Name="ResearchProjectsID" Nullable="false" />
+          <Property Type="String" Name="Running" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Completed" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+          <Property Type="Int32" Name="PublicationsID" Nullable="true" />
+          <Property Type="String" Name="Descrptn" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="spResearchProjectsViewByID_Result">
+          <Property Type="Int32" Name="ResearchProjectsID" Nullable="false" />
+          <Property Type="String" Name="Running" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Completed" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="LabMembersID" Nullable="true" />
+          <Property Type="Int32" Name="PublicationsID" Nullable="true" />
+          <Property Type="String" Name="Descrptn" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ResearchLabModelStoreContainer" CdmEntityContainer="ResearchLabEntities">
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="ResearchLabModel.Cours">
+              <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="CoursesID" ColumnName="CoursesID" />
+                <ScalarProperty Name="Undergraduate" ColumnName="Undergraduate" />
+                <ScalarProperty Name="Postgraduate" ColumnName="Postgraduate" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="LabAnnouncementsID" ColumnName="LabAnnouncementsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LabAnnouncements">
+            <EntityTypeMapping TypeName="ResearchLabModel.LabAnnouncement">
+              <MappingFragment StoreEntitySet="LabAnnouncements">
+                <ScalarProperty Name="LabAnnouncementsID" ColumnName="LabAnnouncementsID" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="MemberCategoriesID" ColumnName="MemberCategoriesID" />
+                <ScalarProperty Name="PublicationMediaID" ColumnName="PublicationMediaID" />
+                <ScalarProperty Name="PublicationsID" ColumnName="PublicationsID" />
+                <ScalarProperty Name="ResearchProjectsID" ColumnName="ResearchProjectsID" />
+                <ScalarProperty Name="CoursesID" ColumnName="CoursesID" />
+                <ScalarProperty Name="Announcement" ColumnName="Announcement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LabMembers">
+            <EntityTypeMapping TypeName="ResearchLabModel.LabMember">
+              <MappingFragment StoreEntitySet="LabMembers">
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="WebPage" ColumnName="WebPage" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ShortCV" ColumnName="ShortCV" />
+                <ScalarProperty Name="MemberCategoriesID" ColumnName="MemberCategoriesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberCategories">
+            <EntityTypeMapping TypeName="ResearchLabModel.MemberCategory">
+              <MappingFragment StoreEntitySet="MemberCategories">
+                <ScalarProperty Name="MemberCategoriesID" ColumnName="MemberCategoriesID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Descrptn" ColumnName="Descrptn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PublicationMedias">
+            <EntityTypeMapping TypeName="ResearchLabModel.PublicationMedia">
+              <MappingFragment StoreEntitySet="PublicationMedia">
+                <ScalarProperty Name="PublicationMediaID" ColumnName="PublicationMediaID" />
+                <ScalarProperty Name="PublicationType" ColumnName="PublicationType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Publications">
+            <EntityTypeMapping TypeName="ResearchLabModel.Publication">
+              <MappingFragment StoreEntitySet="Publications">
+                <ScalarProperty Name="PublicationsID" ColumnName="PublicationsID" />
+                <ScalarProperty Name="ThematicUnit" ColumnName="ThematicUnit" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="PublicationYear" ColumnName="PublicationYear" />
+                <ScalarProperty Name="PublicationMediaID" ColumnName="PublicationMediaID" />
+                <ScalarProperty Name="ResearchProjectsID" ColumnName="ResearchProjectsID" />
+                <ScalarProperty Name="LabAnnouncementsID" ColumnName="LabAnnouncementsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResearchProjects">
+            <EntityTypeMapping TypeName="ResearchLabModel.ResearchProject">
+              <MappingFragment StoreEntitySet="ResearchProjects">
+                <ScalarProperty Name="ResearchProjectsID" ColumnName="ResearchProjectsID" />
+                <ScalarProperty Name="Running" ColumnName="Running" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="PublicationsID" ColumnName="PublicationsID" />
+                <ScalarProperty Name="Descrptn" ColumnName="Descrptn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ResearchLabModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ResearchLabModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ResearchLabModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ResearchLabModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ResearchLabModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ResearchLabModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ResearchLabModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="spCoursesCreateOrUpdate" FunctionName="ResearchLabModel.Store.spCoursesCreateOrUpdate" />
+          <FunctionImportMapping FunctionImportName="spCoursesDeleteByID" FunctionName="ResearchLabModel.Store.spCoursesDeleteByID" />
+          <FunctionImportMapping FunctionImportName="spCoursesViewAll" FunctionName="ResearchLabModel.Store.spCoursesViewAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spCoursesViewAll_Result">
+                <ScalarProperty Name="CoursesID" ColumnName="CoursesID" />
+                <ScalarProperty Name="Undergraduate" ColumnName="Undergraduate" />
+                <ScalarProperty Name="Postgraduate" ColumnName="Postgraduate" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="LabAnnouncementsID" ColumnName="LabAnnouncementsID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCoursesViewByID" FunctionName="ResearchLabModel.Store.spCoursesViewByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spCoursesViewByID_Result">
+                <ScalarProperty Name="CoursesID" ColumnName="CoursesID" />
+                <ScalarProperty Name="Undergraduate" ColumnName="Undergraduate" />
+                <ScalarProperty Name="Postgraduate" ColumnName="Postgraduate" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="LabAnnouncementsID" ColumnName="LabAnnouncementsID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spLabAnnouncementsCreateOrUpdate" FunctionName="ResearchLabModel.Store.spLabAnnouncementsCreateOrUpdate" />
+          <FunctionImportMapping FunctionImportName="spLabAnnouncementsDeleteByID" FunctionName="ResearchLabModel.Store.spLabAnnouncementsDeleteByID" />
+          <FunctionImportMapping FunctionImportName="spLabAnnouncementsViewAll" FunctionName="ResearchLabModel.Store.spLabAnnouncementsViewAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spLabAnnouncementsViewAll_Result">
+                <ScalarProperty Name="LabAnnouncementsID" ColumnName="LabAnnouncementsID" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="MemberCategoriesID" ColumnName="MemberCategoriesID" />
+                <ScalarProperty Name="PublicationMediaID" ColumnName="PublicationMediaID" />
+                <ScalarProperty Name="PublicationsID" ColumnName="PublicationsID" />
+                <ScalarProperty Name="ResearchProjectsID" ColumnName="ResearchProjectsID" />
+                <ScalarProperty Name="CoursesID" ColumnName="CoursesID" />
+                <ScalarProperty Name="Announcement" ColumnName="Announcement" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spLabAnnouncementsViewByID" FunctionName="ResearchLabModel.Store.spLabAnnouncementsViewByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spLabAnnouncementsViewByID_Result">
+                <ScalarProperty Name="LabAnnouncementsID" ColumnName="LabAnnouncementsID" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="MemberCategoriesID" ColumnName="MemberCategoriesID" />
+                <ScalarProperty Name="PublicationMediaID" ColumnName="PublicationMediaID" />
+                <ScalarProperty Name="PublicationsID" ColumnName="PublicationsID" />
+                <ScalarProperty Name="ResearchProjectsID" ColumnName="ResearchProjectsID" />
+                <ScalarProperty Name="CoursesID" ColumnName="CoursesID" />
+                <ScalarProperty Name="Announcement" ColumnName="Announcement" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spLabMembersCreateOrUpdate" FunctionName="ResearchLabModel.Store.spLabMembersCreateOrUpdate" />
+          <FunctionImportMapping FunctionImportName="spLabMembersDeleteByID" FunctionName="ResearchLabModel.Store.spLabMembersDeleteByID" />
+          <FunctionImportMapping FunctionImportName="spLabMembersViewAll" FunctionName="ResearchLabModel.Store.spLabMembersViewAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spLabMembersViewAll_Result">
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="WebPage" ColumnName="WebPage" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ShortCV" ColumnName="ShortCV" />
+                <ScalarProperty Name="MemberCategoriesID" ColumnName="MemberCategoriesID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spLabMembersViewByID" FunctionName="ResearchLabModel.Store.spLabMembersViewByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spLabMembersViewByID_Result">
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="WebPage" ColumnName="WebPage" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ShortCV" ColumnName="ShortCV" />
+                <ScalarProperty Name="MemberCategoriesID" ColumnName="MemberCategoriesID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spMemberActivityReportPerYear" FunctionName="ResearchLabModel.Store.spMemberActivityReportPerYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spMemberActivityReportPerYear_Result">
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="ThematicUnit" ColumnName="ThematicUnit" />
+                <ScalarProperty Name="PublicationYear" ColumnName="PublicationYear" />
+                <ScalarProperty Name="Running" ColumnName="Running" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="Descrptn" ColumnName="Descrptn" />
+                <ScalarProperty Name="Undergraduate" ColumnName="Undergraduate" />
+                <ScalarProperty Name="Postgraduate" ColumnName="Postgraduate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spMemberCategoriesCreateOrUpdate" FunctionName="ResearchLabModel.Store.spMemberCategoriesCreateOrUpdate" />
+          <FunctionImportMapping FunctionImportName="spMemberCategoriesDeleteByID" FunctionName="ResearchLabModel.Store.spMemberCategoriesDeleteByID" />
+          <FunctionImportMapping FunctionImportName="spMemberCategoriesViewAll" FunctionName="ResearchLabModel.Store.spMemberCategoriesViewAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spMemberCategoriesViewAll_Result">
+                <ScalarProperty Name="MemberCategoriesID" ColumnName="MemberCategoriesID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Descrptn" ColumnName="Descrptn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spMemberCategoriesViewByID" FunctionName="ResearchLabModel.Store.spMemberCategoriesViewByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spMemberCategoriesViewByID_Result">
+                <ScalarProperty Name="MemberCategoriesID" ColumnName="MemberCategoriesID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Descrptn" ColumnName="Descrptn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spMemberPublicationPerCongress" FunctionName="ResearchLabModel.Store.spMemberPublicationPerCongress" />
+          <FunctionImportMapping FunctionImportName="spMemberPublicationPerMagazine" FunctionName="ResearchLabModel.Store.spMemberPublicationPerMagazine" />
+          <FunctionImportMapping FunctionImportName="spMemberPublicationPerPublicationType" FunctionName="ResearchLabModel.Store.spMemberPublicationPerPublicationType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spMemberPublicationPerPublicationType_Result">
+                <ScalarProperty Name="NumberOfPublicationsPerType" ColumnName="NumberOfPublicationsPerType" />
+                <ScalarProperty Name="PublicationType" ColumnName="PublicationType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spMemberPublicationReportPerYearReversed" FunctionName="ResearchLabModel.Store.spMemberPublicationReportPerYearReversed">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spMemberPublicationReportPerYearReversed_Result">
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="ThematicUnit" ColumnName="ThematicUnit" />
+                <ScalarProperty Name="PublicationYear" ColumnName="PublicationYear" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spMemberWithSameNumberOfPublications" FunctionName="ResearchLabModel.Store.spMemberWithSameNumberOfPublications">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spMemberWithSameNumberOfPublications_Result">
+                <ScalarProperty Name="NumberOfSamePublications" ColumnName="NumberOfSamePublications" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spMemberWithSamePublications" FunctionName="ResearchLabModel.Store.spMemberWithSamePublications">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spMemberWithSamePublications_Result">
+                <ScalarProperty Name="SamePublications" ColumnName="SamePublications" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spPublicationMediaCreateOrUpdate" FunctionName="ResearchLabModel.Store.spPublicationMediaCreateOrUpdate" />
+          <FunctionImportMapping FunctionImportName="spPublicationMediaDeleteByID" FunctionName="ResearchLabModel.Store.spPublicationMediaDeleteByID" />
+          <FunctionImportMapping FunctionImportName="spPublicationMediaViewAll" FunctionName="ResearchLabModel.Store.spPublicationMediaViewAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spPublicationMediaViewAll_Result">
+                <ScalarProperty Name="PublicationMediaID" ColumnName="PublicationMediaID" />
+                <ScalarProperty Name="PublicationType" ColumnName="PublicationType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spPublicationMediaViewByID" FunctionName="ResearchLabModel.Store.spPublicationMediaViewByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spPublicationMediaViewByID_Result">
+                <ScalarProperty Name="PublicationMediaID" ColumnName="PublicationMediaID" />
+                <ScalarProperty Name="PublicationType" ColumnName="PublicationType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spPublicationsCreateOrUpdate" FunctionName="ResearchLabModel.Store.spPublicationsCreateOrUpdate" />
+          <FunctionImportMapping FunctionImportName="spPublicationsDeleteByID" FunctionName="ResearchLabModel.Store.spPublicationsDeleteByID" />
+          <FunctionImportMapping FunctionImportName="spPublicationsViewAll" FunctionName="ResearchLabModel.Store.spPublicationsViewAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spPublicationsViewAll_Result">
+                <ScalarProperty Name="PublicationsID" ColumnName="PublicationsID" />
+                <ScalarProperty Name="ThematicUnit" ColumnName="ThematicUnit" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="PublicationYear" ColumnName="PublicationYear" />
+                <ScalarProperty Name="PublicationMediaID" ColumnName="PublicationMediaID" />
+                <ScalarProperty Name="ResearchProjectsID" ColumnName="ResearchProjectsID" />
+                <ScalarProperty Name="LabAnnouncementsID" ColumnName="LabAnnouncementsID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spPublicationsViewByID" FunctionName="ResearchLabModel.Store.spPublicationsViewByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spPublicationsViewByID_Result">
+                <ScalarProperty Name="PublicationsID" ColumnName="PublicationsID" />
+                <ScalarProperty Name="ThematicUnit" ColumnName="ThematicUnit" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="PublicationYear" ColumnName="PublicationYear" />
+                <ScalarProperty Name="PublicationMediaID" ColumnName="PublicationMediaID" />
+                <ScalarProperty Name="ResearchProjectsID" ColumnName="ResearchProjectsID" />
+                <ScalarProperty Name="LabAnnouncementsID" ColumnName="LabAnnouncementsID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spResearchProjectsCreateOrUpdate" FunctionName="ResearchLabModel.Store.spResearchProjectsCreateOrUpdate" />
+          <FunctionImportMapping FunctionImportName="spResearchprojectsDeleteByID" FunctionName="ResearchLabModel.Store.spResearchprojectsDeleteByID" />
+          <FunctionImportMapping FunctionImportName="spResearchprojectsViewAll" FunctionName="ResearchLabModel.Store.spResearchprojectsViewAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spResearchprojectsViewAll_Result">
+                <ScalarProperty Name="ResearchProjectsID" ColumnName="ResearchProjectsID" />
+                <ScalarProperty Name="Running" ColumnName="Running" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="PublicationsID" ColumnName="PublicationsID" />
+                <ScalarProperty Name="Descrptn" ColumnName="Descrptn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spResearchProjectsViewByID" FunctionName="ResearchLabModel.Store.spResearchProjectsViewByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchLabModel.spResearchProjectsViewByID_Result">
+                <ScalarProperty Name="ResearchProjectsID" ColumnName="ResearchProjectsID" />
+                <ScalarProperty Name="Running" ColumnName="Running" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="LabMembersID" ColumnName="LabMembersID" />
+                <ScalarProperty Name="PublicationsID" ColumnName="PublicationsID" />
+                <ScalarProperty Name="Descrptn" ColumnName="Descrptn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
